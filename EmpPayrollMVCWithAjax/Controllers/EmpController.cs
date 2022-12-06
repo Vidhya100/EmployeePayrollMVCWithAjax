@@ -1,6 +1,7 @@
 ﻿using EmpPayrollMVCWithAjax.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmpPayrollMVCWithAjax.Controllers
@@ -24,7 +25,7 @@ namespace EmpPayrollMVCWithAjax.Controllers
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
             if (id == 0)
-                return View();
+                return View(new EmpModel());
             else
             {
                 var EmpModel = await _context.EmpData.FindAsync(id);
@@ -35,16 +36,19 @@ namespace EmpPayrollMVCWithAjax.Controllers
                 return View(EmpModel);
             }
         }
-        /*
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("EmpID,EmpName,ProfileImg,Gender,Department,Salary,StartDate,Notes ") ] EmpModel employee)
         {
+            if (ModelState.IsValid)
+            {
+
                 //Insert
                 if (id == 0)
                 {
-                    EmpModel.Date = DateTime.Now;
-                    _context.Add(EmpModel);
+                   
+                    _context.Add(employee);
                     await _context.SaveChangesAsync();
 
                 }
@@ -53,56 +57,43 @@ namespace EmpPayrollMVCWithAjax.Controllers
                 {
                     try
                     {
-                        _context.Update(EmpModel);
+                        _context.Update(employee);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        if (!TransactionModelExists(EmpModel.TransactionId))
-                        { return NotFound(); }
+                        if (!EmpModelExists(employee.EmpID))
+                        {
+                            return NotFound();
+                        }
                         else
-                        { throw; }
+                        {
+                            throw;
+                        }
                     }
                 }
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.EmpData.ToList()) });
-            }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", EmpModel) });
+        }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", employee) });
         }
 
 
+      
 
-        //For edit employee data
-        [HttpGet]
-        //get employee data from get all 
-        public IActionResult UpdateEmployee(int? id)
+        private bool EmpModelExists(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            EmpModel employee = iuserBL.GetEmployeeData(id);
+            return _context.EmpData.Any(e => e.EmpID == id);
+        }
 
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            return View(employee);
-        }
-        //match id and update data
-        [HttpPost]
-        public IActionResult UpdateEmployee(int id, [Bind] EmpModel employee)
+        //for delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (id != employee.EmpID)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                iuserBL.UpdateEmployee(employee);
-                return RedirectToAction("GetAllEmployees");
-            }
-            return View(employee);
+            var empModel = await _context.EmpData.FindAsync(id);
+            _context.EmpData.Remove(empModel);
+            await _context.SaveChangesAsync();
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.EmpData.ToList()) });
         }
-    */
     }
 }

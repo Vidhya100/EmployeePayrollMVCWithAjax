@@ -27,19 +27,23 @@ namespace EmpPayrollMVCWithAjax.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Department")
-                        .HasColumnType("nvarchar(11)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("EmpName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(11)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ProfileImg")
-                        .HasColumnType("nvarchar(11)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<float>("Salary")
                         .HasColumnType("real");

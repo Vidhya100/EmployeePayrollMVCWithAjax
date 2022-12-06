@@ -5,69 +5,11 @@
 }
 
 <h1>Employee Details</h1>
-<p>
-   <a onclick="showInPopup('@Url.Action("AddOrEdit","Emp",null,Context.Request.Scheme)','Add New Employee')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Add New</a>
-</p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EmpName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProfileImg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmpName)
-            </td>
-            <td>
-               <img src="@Url.Content(item.ProfileImg)"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EmpID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmpID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpID">Delete</a>
-            </td>
-        </tr>
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll",Model)
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>

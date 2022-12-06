@@ -8,19 +8,34 @@ namespace EmpPayrollMVCWithAjax.Models
     {
         [Key]
         public int EmpID { get; set; }
+
         [Column(TypeName = "nvarchar(255)")]
+        [Required(ErrorMessage = "This Field is required.")]
         public string EmpName { get; set; }
-        [Column(TypeName = "nvarchar(11)")]
+
+        [Required(ErrorMessage = "This Field is required.")]
+        [Column(TypeName = "nvarchar(500)")]
         public string ProfileImg { get; set; }
-        [Column(TypeName = "nvarchar(11)")]
+
+        [Required(ErrorMessage = "This Field is required.")]
+        [Column(TypeName = "nvarchar(255)")]
         public string Gender { get; set; }
-        [Column(TypeName = "nvarchar(11)")]
+
+
+        [Required(ErrorMessage = "This Field is required.")]
+        [Column(TypeName = "nvarchar(255)")]
         public string Department { get; set; }
+
+        [Required(ErrorMessage = "This Field is required.")]
         public float Salary { get; set; }
+
+        [Required(ErrorMessage = "This Field is required.")]
         [Column(TypeName = "DateTime")]
         public DateTime StartDate { get; set; }
 
-        [Column(TypeName = "nvarchar(11)")]
+
+
+        [Column(TypeName = "nvarchar(255)")]
         public string Notes { get; set; }
     }
 }

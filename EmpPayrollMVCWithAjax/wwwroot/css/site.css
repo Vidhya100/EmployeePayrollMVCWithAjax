@@ -19,9 +19,9 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
@@ -107,4 +107,9 @@ body {
 
 .hide {
     display: none;
+}
+.navbar-collapse {
+    padding-left: 50px;
+    font-size: 38px;
+    //fot-weight: 20%;
 }
