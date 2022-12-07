@@ -113,3 +113,6 @@ body {
     font-size: 38px;
     //fot-weight: 20%;
 }
+.navbar-nav .nav-link .navbar-light {
+    color: #0366d6;
+}
